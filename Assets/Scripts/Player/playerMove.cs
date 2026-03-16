@@ -6,12 +6,15 @@ public class playerMove : MonoBehaviour {
 
     [Header("Movement")]
     public float moveSpeed;
-
+    public float jumpSpeed;
     public Transform orientation;
 
     public float groundDrag;
+
+    KeyCode jumpKey = KeyCode.Space;
     float horizantalInput;
     float verticalInput;
+
     Vector3 moveDir;
     Boolean grounded;
     
@@ -28,16 +31,25 @@ public class playerMove : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        getMovement();
         checkGrounded();
+        getMovement();
         applyDrag();
         controlSpeed();
+
     }
 
     void FixedUpdate()
     {
         movePlayer();
         
+    }
+
+    private void jump()
+    {
+        if(!grounded) return;
+        rigidbody.linearVelocity = new Vector3(rigidbody.linearVelocity.x,0,rigidbody.linearVelocity.z);
+
+        rigidbody.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);
     }
 
     private void controlSpeed()
@@ -55,7 +67,8 @@ public class playerMove : MonoBehaviour {
 
     private void checkGrounded()
     {
-        grounded = rigidbody.linearVelocity.y == 0;
+        //grounded = rigidbody.linearVelocity.y < 0.1f && rigidbody.linearVelocity.y >-0.1f ;
+        grounded = rigidbody.linearVelocity.y == 0 ;
     }
 
     
@@ -80,5 +93,13 @@ public class playerMove : MonoBehaviour {
     {
         horizantalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        
+        if (Input.GetKey(jumpKey) && grounded)
+        {
+            jump();
+        }
+    
+        
     }
 }
