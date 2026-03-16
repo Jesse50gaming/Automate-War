@@ -1,105 +1,92 @@
-using System;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class playerMove : MonoBehaviour {
-
+public class PlayerMove : MonoBehaviour
+{
     [Header("Movement")]
     public float moveSpeed;
-    public float jumpSpeed;
+    public float jumpForce;
     public Transform orientation;
 
     public float groundDrag;
 
-    KeyCode jumpKey = KeyCode.Space;
-    float horizantalInput;
+    float horizontalInput;
     float verticalInput;
 
     Vector3 moveDir;
-    Boolean grounded;
-    
-    Rigidbody rigidbody;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    bool grounded;
+
+    public KeyCode jumpKey = KeyCode.Space;
+
+    Rigidbody rb;
+
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.freezeRotation = true;
-
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        checkGrounded();
+        grounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+
         getMovement();
         applyDrag();
         controlSpeed();
-
     }
 
     void FixedUpdate()
     {
         movePlayer();
-        
     }
 
-    private void jump()
+    void getMovement()
     {
-        if(!grounded) return;
-        rigidbody.linearVelocity = new Vector3(rigidbody.linearVelocity.x,0,rigidbody.linearVelocity.z);
-
-        rigidbody.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);
-    }
-
-    private void controlSpeed()
-    {
-        Vector3 flatVelocity = new Vector3(rigidbody.linearVelocity.x,0,rigidbody.linearVelocity.z);
-
-        if (flatVelocity.magnitude > moveSpeed)
-        {
-            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
-            rigidbody.linearVelocity = new Vector3(limitedVelocity.x, rigidbody.linearVelocity.y, limitedVelocity.z);
-        }
-    }
-
-
-
-    private void checkGrounded()
-    {
-        //grounded = rigidbody.linearVelocity.y < 0.1f && rigidbody.linearVelocity.y >-0.1f ;
-        grounded = rigidbody.linearVelocity.y == 0 ;
-    }
-
-    
-    private void applyDrag()
-    {
-        if (grounded){
-            rigidbody.linearDamping = groundDrag;
-        } else
-        {
-           rigidbody.linearDamping = 0; 
-        }
-    }
-
-    private void movePlayer()
-    {
-        moveDir = orientation.forward * verticalInput + orientation.right * horizantalInput;
-
-        rigidbody.AddForce(moveDir.normalized * moveSpeed, ForceMode.Force);
-    }
-
-    private void getMovement()
-    {
-        horizantalInput = Input.GetAxisRaw("Horizontal");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        
-        if (Input.GetKey(jumpKey) && grounded)
+        if (Input.GetKeyDown(jumpKey) && grounded)
         {
             jump();
         }
-    
+    }
+
+    void movePlayer()
+    {
+        moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        if (grounded)
+        {
+            rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
+        } else
+        {
+            rb.AddForce(moveDir.normalized * moveSpeed, ForceMode.Force);
+        }
         
+    }
+
+    void jump()
+    {
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    void controlSpeed()
+    {
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
+    void applyDrag()
+    {
+        if (grounded)
+            rb.linearDamping = groundDrag;
+        else
+            rb.linearDamping = 0;
     }
 }
