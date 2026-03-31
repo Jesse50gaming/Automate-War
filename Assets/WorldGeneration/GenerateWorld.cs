@@ -31,7 +31,7 @@ public class TerrainGenerator : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(mat.GetTexture("_TerrainGradient"));
+        
         // Only update if values change (optional optimization)
         ApplyMaterialSettings();
     }
