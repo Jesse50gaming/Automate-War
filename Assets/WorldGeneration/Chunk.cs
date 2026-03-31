@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Chunk
 {
-    public const int Size = 16;
+    public const int chunkWidth = 16;
+    public const int chunkLength = 16;
+    public const int chunkHeight = 128;
 
-    private BlockType[,,] blocks = new BlockType[Size, Size, Size];
+    private BlockType[,,] blocks = new BlockType[chunkWidth, chunkHeight, chunkLength];
     private Vector3 position;
 
     public Chunk(Vector3 position)
@@ -15,15 +17,15 @@ public class Chunk
 
     private void GenerateBlocks()
     {
-        for (int x = 0; x < Size; x++)
+        for (int x = 0; x < chunkWidth; x++)
         {
-            for (int z = 0; z < Size; z++)
+            for (int z = 0; z < chunkLength; z++)
             {
                 int height = Mathf.FloorToInt(Mathf.PerlinNoise(
                     (x + position.x) * 0.05f,
-                    (z + position.z) * 0.05f) * Size);
+                    (z + position.z) * 0.05f) * chunkHeight);
 
-                for (int y = 0; y < Size; y++)
+                for (int y = 0; y < chunkHeight; y++)
                 {
                     if (y < height)
                         blocks[x, y, z] = BlockType.DIRT;

@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TerrainTexture
-  m_Shader: {fileID: 4800000, guid: 3447792f1e8655547ad113e78aa4da73, type: 3}
+  m_Shader: {fileID: 4800000, guid: 89ea164fa7ef27c468d4d8101068eac6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -117,9 +117,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _MaxTerrainHeight: 6.125522
+    - _MaxTerrainHeight: 12.46
     - _Metallic: 0
-    - _MinTerrainHeight: 0.77206695
+    - _MinTerrainHeight: 0.09
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
