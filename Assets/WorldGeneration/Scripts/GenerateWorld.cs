@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GenerateWorld : MonoBehaviour
@@ -5,51 +7,58 @@ public class GenerateWorld : MonoBehaviour
     public GameObject chunkPrefab;
     public GameObject player;
 
-    public int renderDistance = 16; // 16x16 by default
+    public int renderDistance = 16; 
     public int chunkSize = 16;
+
+    private InfiniteGrid<bool> worldGrid;
 
     void Start()
     {
-        generateWorld();
+        worldGrid = new InfiniteGrid<bool>();
+        generateWorld(new Vector2(0, 0));
     }
 
     void Update()
     {
-        for (int x = 0; x < renderDistance; x++)
-        {
-            for (int z = 0; z < renderDistance; z++)
-            {
-                GameObject chunkObj = Instantiate(chunkPrefab);
+        Vector2 playerChunk = chunkFromBlockPos(
+            new Vector2(player.transform.position.x, player.transform.position.z)
+        );
 
-                chunkObj.transform.position = new Vector3(x * chunkSize, 0, z * chunkSize);
-
-                ChunkRenderer chunk = chunkObj.GetComponent<ChunkRenderer>();
-
-                chunk.Init(x * chunkSize, z * chunkSize);
-            }
-        }
+        generateWorld(playerChunk);
     }
 
-    private void generateWorld()
+    private Vector2 chunkFromBlockPos(Vector2 pos)
     {
-        for (int x = 0; x < renderDistance; x++)
-        {
-            for (int z = 0; z < renderDistance; z++)
-            {
-                GameObject chunkObj = Instantiate(chunkPrefab);
+        return new Vector2(
+            Mathf.FloorToInt(pos.x / chunkSize),
+            Mathf.FloorToInt(pos.y / chunkSize)
+        );
+    }
 
+    private void generateWorld(Vector2 chunkCenter)
+    {
+        int half = renderDistance / 2;
+
+        for (int x = -half; x < half; x++)
+        {
+            for (int z = -half; z < half; z++)
+            {
+                int chunkX = (int)chunkCenter.x + x;
+                int chunkZ = (int)chunkCenter.y + z;
+
+                if (worldGrid.Get(chunkX, chunkZ)) continue;
+
+                worldGrid.Set(chunkX, chunkZ, true);
+
+                GameObject chunkObj = Instantiate(chunkPrefab);
                 chunkObj.transform.position = new Vector3(
-                    x * chunkSize,
+                    chunkX * chunkSize,
                     0,
-                    z * chunkSize
+                    chunkZ * chunkSize
                 );
 
                 ChunkRenderer chunk = chunkObj.GetComponent<ChunkRenderer>();
-
-                chunk.Init(
-                    x * chunkSize,
-                    z * chunkSize
-                );
+                chunk.Init(chunkX * chunkSize, chunkZ * chunkSize);
             }
         }
     }
