@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8817581762440535068}
   - component: {fileID: 6237465710120495151}
   - component: {fileID: 432617660710895704}
-  - component: {fileID: 5723509245287128199}
+  - component: {fileID: 7498972817877650893}
+  - component: {fileID: 6854141474791954004}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f3a5fe2e63fbcf4a89bfa09c7ba387e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +92,29 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5723509245287128199
+--- !u!64 &7498972817877650893
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6280040641492443736}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!114 &6854141474791954004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,11 +123,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 6280040641492443736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bbdcc54237c4ac4790d044bc23d82aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e84b363153f87974aad1c48c80b858ab, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChunkRenderer
-  size: 16
-  xOffset: 0
-  zOffset: 0
-  noiseScale: 0.03
-  heightMultiplier: 7
+  m_EditorClassIdentifier: Assembly-CSharp::ChunkMesh
+  terrainGradient:
+    serializedVersion: 2
+    key0: {r: 0.15619439, g: 0.18390703, b: 0.8490566, a: 1}
+    key1: {r: 0.46226418, g: 0.2423687, b: 0.06323426, a: 1}
+    key2: {r: 0.16709726, g: 0.6132076, b: 0.00867745, a: 1}
+    key3: {r: 0.8915094, g: 1, b: 0.97589463, a: 1}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 29105
+    ctime2: 45682
+    ctime3: 59174
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 3470
+    atime2: 36815
+    atime3: 65535
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 4

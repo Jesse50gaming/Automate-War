@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class ChunkRenderer : MonoBehaviour
 {
     public int size = 16;
@@ -12,6 +12,7 @@ public class ChunkRenderer : MonoBehaviour
     public float heightMultiplier = 7;
 
     private Mesh mesh;
+    private MeshCollider meshCollider;
 
     public void Init(int xOffset, int zOffset)
     {
@@ -19,9 +20,12 @@ public class ChunkRenderer : MonoBehaviour
         this.zOffset = zOffset;
 
         mesh = new Mesh();
+        meshCollider = GetComponent<MeshCollider>();
+
         GetComponent<MeshFilter>().mesh = mesh;
 
         GenerateChunk();
+        UpdateCollider();
     }
 
     private void GenerateChunk()
@@ -68,5 +72,11 @@ public class ChunkRenderer : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+    }
+
+    private void UpdateCollider()
+    {
+        meshCollider.sharedMesh = null; // force refresh
+        meshCollider.sharedMesh = mesh;
     }
 }

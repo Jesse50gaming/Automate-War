@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GenerateWorld : MonoBehaviour
@@ -15,7 +13,7 @@ public class GenerateWorld : MonoBehaviour
     void Start()
     {
         worldGrid = new InfiniteGrid<bool>();
-        generateWorld(new Vector2(0, 0));
+        generateWorld(Vector2.zero);
     }
 
     void Update()
@@ -50,15 +48,20 @@ public class GenerateWorld : MonoBehaviour
 
                 worldGrid.Set(chunkX, chunkZ, true);
 
-                GameObject chunkObj = Instantiate(chunkPrefab);
-                chunkObj.transform.position = new Vector3(
+                Vector3 worldPos = new Vector3(
                     chunkX * chunkSize,
                     0,
                     chunkZ * chunkSize
                 );
 
-                ChunkRenderer chunk = chunkObj.GetComponent<ChunkRenderer>();
-                chunk.Init(chunkX * chunkSize, chunkZ * chunkSize);
+                GameObject chunkObj = Instantiate(chunkPrefab, worldPos, Quaternion.identity);
+
+               
+                Chunk chunkData = new Chunk(worldPos);
+
+                
+                ChunkMesh chunkMesh = chunkObj.GetComponent<ChunkMesh>();
+                chunkMesh.Init(chunkData);
             }
         }
     }

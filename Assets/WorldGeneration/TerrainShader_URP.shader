@@ -2,7 +2,7 @@ Shader "Custom/TerrainShader_URP"
 {
     Properties
     {
-        _TerrainGradient ("Terrain Gradient", 2D) = "white" {}
+        _TerrainGradient ("Terrain Gradient", 2D) = "green" {}
         _MinTerrainHeight ("Min Height", Float) = 0
         _MaxTerrainHeight ("Max Height", Float) = 10
     }

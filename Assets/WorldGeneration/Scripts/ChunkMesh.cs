@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class ChunkMesh : MonoBehaviour
 {
     private Chunk chunk;
@@ -12,19 +12,39 @@ public class ChunkMesh : MonoBehaviour
 
     private int vertexIndex = 0;
 
+    [SerializeField] private Gradient terrainGradient;
+
+    private Mesh mesh;
+    private MeshCollider meshCollider;
+    private Texture2D gradientTexture;
+
     public void Init(Chunk chunk)
     {
         this.chunk = chunk;
+
+        mesh = new Mesh();
+        meshCollider = GetComponent<MeshCollider>();
+
+        GetComponent<MeshFilter>().mesh = mesh;
+
         GenerateMesh();
+        GradientToTexture();
+        ApplyTexture();
+        UpdateCollider();
     }
 
     private void GenerateMesh()
     {
-        for (int x = 0; x < Chunk.chunkWidth; x++)
+        vertices.Clear();
+        triangles.Clear();
+        uvs.Clear();
+        vertexIndex = 0;
+
+        for (int x = 0; x < Chunk.chunkLength; x++)
         {
             for (int y = 0; y < Chunk.chunkHeight; y++)
             {
-                for (int z = 0; z < Chunk.chunkLength; z++)
+                for (int z = 0; z < Chunk.chunkWidth; z++)
                 {
                     BlockType block = chunk.GetBlock(x, y, z);
                     if (block == BlockType.AIR) continue;
@@ -39,13 +59,39 @@ public class ChunkMesh : MonoBehaviour
             }
         }
 
-        Mesh mesh = new Mesh();
+        mesh.Clear();
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
         mesh.uv = uvs.ToArray();
         mesh.RecalculateNormals();
+    }
 
-        GetComponent<MeshFilter>().mesh = mesh;
+    private void ApplyTexture()
+    {
+        var mat = GetComponent<MeshRenderer>().material;
+        mat.mainTexture = gradientTexture;
+    }
+
+    private void UpdateCollider()
+    {
+        meshCollider.sharedMesh = null;
+        meshCollider.sharedMesh = mesh;
+    }
+
+    private void GradientToTexture()
+    {
+        gradientTexture = new Texture2D(1, 100);
+        gradientTexture.wrapMode = TextureWrapMode.Clamp;
+
+        Color[] pixelColors = new Color[100];
+
+        for (int i = 0; i < 100; i++)
+        {
+            pixelColors[i] = terrainGradient.Evaluate(i / 99f);
+        }
+
+        gradientTexture.SetPixels(pixelColors);
+        gradientTexture.Apply();
     }
 
     private void TryAddFace(int x, int y, int z, Vector3 dir)
@@ -70,7 +116,6 @@ public class ChunkMesh : MonoBehaviour
     private void AddFace(Vector3 pos, Vector3 dir)
     {
         Vector3[] faceVertices = GetFaceVertices(pos, dir);
-
         vertices.AddRange(faceVertices);
 
         triangles.Add(vertexIndex + 0);
@@ -80,10 +125,12 @@ public class ChunkMesh : MonoBehaviour
         triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 3);
 
-        uvs.Add(new Vector2(0, 0));
-        uvs.Add(new Vector2(1, 0));
-        uvs.Add(new Vector2(0, 1));
-        uvs.Add(new Vector2(1, 1));
+        float height = pos.y / Chunk.chunkHeight;
+
+        uvs.Add(new Vector2(0, height));
+        uvs.Add(new Vector2(1, height));
+        uvs.Add(new Vector2(0, height));
+        uvs.Add(new Vector2(1, height));
 
         vertexIndex += 4;
     }
