@@ -6,7 +6,7 @@ public class Chunk
     public const int chunkLength = 16;
     public const int chunkHeight = 128;
 
-    public const float noiseMult = 0.01f;
+    public const float noiseMult = 0.005f;
 
     private BlockType[,,] blocks = new BlockType[chunkWidth, chunkHeight, chunkLength];
     private Vector3 position;
