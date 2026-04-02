@@ -100,8 +100,7 @@ public class ChunkMesh : MonoBehaviour
         int ny = y + (int)dir.y;
         int nz = z + (int)dir.z;
 
-        if (IsInside(nx, ny, nz) && chunk.GetBlock(nx, ny, nz) != BlockType.AIR)
-            return;
+        if (IsInside(nx, ny, nz) && chunk.GetBlock(nx, ny, nz) != BlockType.AIR) return;
 
         AddFace(new Vector3(x, y, z), dir);
     }
@@ -119,11 +118,11 @@ public class ChunkMesh : MonoBehaviour
         vertices.AddRange(faceVertices);
 
         triangles.Add(vertexIndex + 0);
-        triangles.Add(vertexIndex + 1);
-        triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 1);
+        triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 3);
+        triangles.Add(vertexIndex + 1);
 
         float height = pos.y / Chunk.chunkHeight;
 
@@ -137,21 +136,58 @@ public class ChunkMesh : MonoBehaviour
 
     private Vector3[] GetFaceVertices(Vector3 pos, Vector3 dir)
     {
-        if (dir == Vector3.up)
-            return new[] { pos + new Vector3(0,1,0), pos + new Vector3(1,1,0), pos + new Vector3(0,1,1), pos + new Vector3(1,1,1) };
+        if (dir == Vector3.forward) // Z+
+            return new[]
+            {
+                pos + new Vector3(0,0,1),
+                pos + new Vector3(0,1,1),
+                pos + new Vector3(1,0,1),
+                pos + new Vector3(1,1,1)
+            };
 
-        if (dir == Vector3.down)
-            return new[] { pos, pos + new Vector3(1,0,0), pos + new Vector3(0,0,1), pos + new Vector3(1,0,1) };
+        if (dir == Vector3.back) // Z-
+            return new[]
+            {
+                pos + new Vector3(1,0,0),
+                pos + new Vector3(1,1,0),
+                pos + new Vector3(0,0,0),
+                pos + new Vector3(0,1,0)
+            };
 
-        if (dir == Vector3.forward)
-            return new[] { pos + new Vector3(0,0,1), pos + new Vector3(1,0,1), pos + new Vector3(0,1,1), pos + new Vector3(1,1,1) };
+        if (dir == Vector3.left) // X-
+            return new[]
+            {
+                pos + new Vector3(0,0,0),
+                pos + new Vector3(0,1,0),
+                pos + new Vector3(0,0,1),
+                pos + new Vector3(0,1,1)
+            };
 
-        if (dir == Vector3.back)
-            return new[] { pos, pos + new Vector3(1,0,0), pos + new Vector3(0,1,0), pos + new Vector3(1,1,0) };
+        if (dir == Vector3.right) // X+
+            return new[]
+            {
+                pos + new Vector3(1,0,1),
+                pos + new Vector3(1,1,1),
+                pos + new Vector3(1,0,0),
+                pos + new Vector3(1,1,0)
+            };
 
-        if (dir == Vector3.left)
-            return new[] { pos, pos + new Vector3(0,0,1), pos + new Vector3(0,1,0), pos + new Vector3(0,1,1) };
+        if (dir == Vector3.up) // Y+
+            return new[]
+            {
+                pos + new Vector3(0,1,1),
+                pos + new Vector3(0,1,0),
+                pos + new Vector3(1,1,1),
+                pos + new Vector3(1,1,0)
+            };
 
-        return new[] { pos + new Vector3(1,0,0), pos + new Vector3(1,0,1), pos + new Vector3(1,1,0), pos + new Vector3(1,1,1) };
+        // down
+        return new[]
+        {
+            pos + new Vector3(0,0,0),
+            pos + new Vector3(0,0,1),
+            pos + new Vector3(1,0,0),
+            pos + new Vector3(1,0,1)
+        };
     }
 }
