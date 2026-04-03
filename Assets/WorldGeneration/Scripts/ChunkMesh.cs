@@ -12,8 +12,8 @@ public class ChunkMesh : MonoBehaviour
 
     private int vertexIndex = 0;
 
-    [SerializeField] private Gradient terrainGradient;
-
+    //[SerializeField] private Gradient terrainGradient;
+    [SerializeField] private Texture2D atlas;
     private Mesh mesh;
     private MeshCollider meshCollider;
     private Texture2D gradientTexture;
@@ -28,7 +28,7 @@ public class ChunkMesh : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         GenerateMesh();
-        GradientToTexture();
+        //GradientToTexture();
         ApplyTexture();
         UpdateCollider();
     }
@@ -68,8 +68,14 @@ public class ChunkMesh : MonoBehaviour
 
     private void ApplyTexture()
     {
-        var mat = GetComponent<MeshRenderer>().material;
-        mat.mainTexture = gradientTexture;
+        var renderer = GetComponent<MeshRenderer>();
+        
+        // Create a new material with Unlit/Texture shader
+        Material mat = new Material(Shader.Find("Unlit/Texture"));
+        mat.mainTexture = atlas;
+        mat.mainTextureScale = Vector2.one; // no tiling
+
+        renderer.material = mat;
     }
 
     private void UpdateCollider()
@@ -78,21 +84,21 @@ public class ChunkMesh : MonoBehaviour
         meshCollider.sharedMesh = mesh;
     }
 
-    private void GradientToTexture()
-    {
-        gradientTexture = new Texture2D(1, 100);
-        gradientTexture.wrapMode = TextureWrapMode.Clamp;
+    // private void GradientToTexture()
+    // {
+    //     gradientTexture = new Texture2D(1, 100);
+    //     gradientTexture.wrapMode = TextureWrapMode.Clamp;
 
-        Color[] pixelColors = new Color[100];
+    //     Color[] pixelColors = new Color[100];
 
-        for (int i = 0; i < 100; i++)
-        {
-            pixelColors[i] = terrainGradient.Evaluate(i / 99f);
-        }
+    //     for (int i = 0; i < 100; i++)
+    //     {
+    //         pixelColors[i] = terrainGradient.Evaluate(i / 99f);
+    //     }
 
-        gradientTexture.SetPixels(pixelColors);
-        gradientTexture.Apply();
-    }
+    //     gradientTexture.SetPixels(pixelColors);
+    //     gradientTexture.Apply();
+    // }
 
     private void TryAddFace(int x, int y, int z, Vector3 dir)
     {
@@ -124,12 +130,16 @@ public class ChunkMesh : MonoBehaviour
         triangles.Add(vertexIndex + 3);
         triangles.Add(vertexIndex + 1);
 
-        float height = pos.y / Chunk.chunkHeight;
+        
+        BlockType block = chunk.GetBlock((int)pos.x, (int)pos.y, (int)pos.z);
 
-        uvs.Add(new Vector2(0, height));
-        uvs.Add(new Vector2(1, height));
-        uvs.Add(new Vector2(0, height));
-        uvs.Add(new Vector2(1, height));
+        
+        Vector2Int tile = BlockDatabase.GetTexture(block, dir);
+
+        
+        Vector2[] faceUVs = AtlasUV.GetUVs(tile.x, tile.y);
+
+        uvs.AddRange(faceUVs);
 
         vertexIndex += 4;
     }

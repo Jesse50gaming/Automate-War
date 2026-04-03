@@ -29,10 +29,17 @@ public class Chunk
 
                 for (int y = 0; y < chunkHeight; y++)
                 {
-                    if (y < height)
-                        blocks[x, y, z] = BlockType.DIRT;
-                    else
+                    if (y == height)
+                    {
+                        blocks[x, y, z] = BlockType.GRASS; 
+                    } else if (y < height)
+                    {
+                       blocks[x, y, z] = BlockType.DIRT; 
+                    } else
+                    {
                         blocks[x, y, z] = BlockType.AIR;
+                    }   
+                        
                 }
             }
         }
