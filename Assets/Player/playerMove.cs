@@ -19,16 +19,19 @@ public class PlayerMove : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
 
     Rigidbody rb;
+    GameObject player;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        player = gameObject;
     }
 
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        grounded = Physics.Raycast(transform.position, Vector3.down, player.transform.localScale.y * 1.1f);
 
         getMovement();
         applyDrag();
