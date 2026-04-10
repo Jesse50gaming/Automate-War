@@ -28,7 +28,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
+        grounded = Physics.Raycast(transform.position, Vector3.down, gameObject.transform.localScale.y * 1.1f);
 
         getMovement();
         applyDrag();
@@ -68,7 +68,7 @@ public class PlayerMove : MonoBehaviour
     void jump()
     {
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rb.AddForce(transform.up * jumpForce * gameObject.transform.localScale.y, ForceMode.Impulse);
     }
 
     void controlSpeed()
