@@ -1,27 +1,30 @@
 using UnityEngine;
 
-public abstract class Item
+namespace Items
 {
-    private int count;
-    private Vector2Int atlasCoord;
-
-    public int Count => count;
-    public Vector2Int AtlasCoord => atlasCoord;
-
-    public Item(Vector2Int atlasCoord)
+    public abstract class Item
     {
-        this.atlasCoord = atlasCoord;
-        this.count = 0;
-    }
+        private int count;
+        private Vector2Int atlasCoord;
 
-    public void AddItem(int amount)
-    {
-        count += amount;
-    }
+        public int Count => count;
+        public Vector2Int AtlasCoord => atlasCoord;
 
-    public void RemoveItem(int amount)
-    {
-        count -= amount;
-        if (count < 0) count = 0;
+        public Item(Vector2Int atlasCoord)
+        {
+            this.atlasCoord = atlasCoord;
+            this.count = 0;
+        }
+
+        public void AddItem(int amount)
+        {
+            count += amount;
+        }
+
+        public void RemoveItem(int amount)
+        {
+            count -= amount;
+            if (count < 0) count = 0;
+        }
     }
 }

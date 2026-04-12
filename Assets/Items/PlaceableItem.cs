@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public abstract class PlaceableItem : Item
+namespace Items
 {
-    protected BlockType block;
-
-    public PlaceableItem(BlockType block, Vector2Int atlasCoord) : base(atlasCoord)
+    public abstract class PlaceableItem : Item
     {
-        this.block = block;
-    }
+        protected BlockType block;
 
-    public BlockType GetBlock()
-    {
-        return block;
+        public PlaceableItem(BlockType block, Vector2Int atlasCoord) : base(atlasCoord)
+        {
+            this.block = block;
+        }
+
+        public BlockType GetBlock()
+        {
+            return block;
+        }
     }
 }
