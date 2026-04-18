@@ -1,4 +1,5 @@
 
+using Container;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,22 @@ public class HotbarScript : MonoBehaviour
 
     private Vector2 pos;
 
+    [SerializeField] private InventoryScript inventoryScript;
+    private Hotbar hotbar;
+
     void Start()
     {
+        if (inventoryScript == null)
+        {
+            inventoryScript = FindObjectOfType<InventoryScript>();
+        }
+
+        if (inventoryScript != null)
+        {
+            hotbar = inventoryScript.hotbar;
+        }
+        
+
         image = GetComponent<Image>();
         pos = GetComponent<RectTransform>().position;
         image.sprite = Texture2DToSprite(texture);
