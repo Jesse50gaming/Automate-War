@@ -15,12 +15,13 @@ namespace Container
         public const int hotbarHeight = 0;
         public const int hotbarWidth = 9;
 
-        private Inventory inventory;
+        private Inventory hotbarInventory;
         
         
         public Hotbar()
         {
-            inventory = new Inventory(hotbarHeight,hotbarWidth);
+            hotbarInventory = new Inventory(hotbarHeight,hotbarWidth);
+            hotbarInventory.putItem(0,0,new DirtItem(1));
         }
 
 
@@ -28,7 +29,21 @@ namespace Container
         {
             if (slot < 0 || slot > hotbarWidth) return null;
 
-            return inventory.getItem(hotbarHeight,slot);
+            return hotbarInventory.getItem(hotbarHeight,slot);
+        }
+
+        public bool hasItem(int slot)
+        {
+            if (slot < 0 || slot > hotbarWidth) return false;
+            if (hotbarInventory.getItem(hotbarHeight, slot) != null) return true;
+            return false;
+            
+        }
+
+
+        public void addItem(int slot,Item item)
+        {
+            hotbarInventory.putItem(hotbarHeight, slot, item);
         }
 
     }

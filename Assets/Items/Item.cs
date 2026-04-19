@@ -10,10 +10,10 @@ namespace Items
         public int Count => count;
         public Vector2Int AtlasCoord => atlasCoord;
 
-        public Item(Vector2Int atlasCoord)
+        public Item(Vector2Int atlasCoord, int count)
         {
             this.atlasCoord = atlasCoord;
-            this.count = 0;
+            this.count = count;
         }
 
         public void AddItem(int amount)
@@ -25,6 +25,11 @@ namespace Items
         {
             count -= amount;
             if (count < 0) count = 0;
+        }
+
+        public Vector2Int getAtlasCoords()
+        {
+            return atlasCoord;
         }
     }
 }

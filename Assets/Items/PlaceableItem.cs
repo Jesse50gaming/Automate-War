@@ -6,7 +6,7 @@ namespace Items
     {
         protected BlockType block;
 
-        public PlaceableItem(BlockType block, Vector2Int atlasCoord) : base(atlasCoord)
+        public PlaceableItem(BlockType block, Vector2Int atlasCoord,int count) : base(atlasCoord,count)
         {
             this.block = block;
         }
