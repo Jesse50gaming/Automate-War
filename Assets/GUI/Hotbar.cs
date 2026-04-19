@@ -30,6 +30,14 @@ namespace Container
             hotbarInventory.putItem(hotbarHeight-1,0,new DirtItem(1));
             hotbarInventory.putItem(hotbarHeight-1,1,new StoneItem(1));
             hotbarInventory.putItem(hotbarHeight-1,2,new DirtItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,3,new StoneItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,4,new DirtItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,5,new StoneItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,6,new DirtItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,7,new StoneItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,8,new DirtItem(1));
+            hotbarInventory.putItem(hotbarHeight-1,9,new StoneItem(1));
+            
         }
 
 
