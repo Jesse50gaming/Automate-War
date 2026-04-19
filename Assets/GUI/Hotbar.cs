@@ -17,7 +17,7 @@ namespace Container
 
         public const int slotWidth = 16;
         public const int slotPadding = 1;
-       
+        public const int gapFromBottomOfScreen = 10;
         private Inventory hotbarInventory;
 
         private HotbarScript hotbarScript;

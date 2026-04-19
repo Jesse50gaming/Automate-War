@@ -43,7 +43,7 @@ public class HotbarScript : MonoBehaviour
         rect.anchorMax = new Vector2(0.5f, 0f);
         rect.pivot = new Vector2(0.5f, 0f);
 
-        rect.anchoredPosition = new Vector2(0, 10 * UIscale);
+        rect.anchoredPosition = new Vector2(0, Hotbar.gapFromBottomOfScreen);
 
         // Apply global scale (THIS replaces all per-slot scaling)
         rect.localScale = new Vector3(UIscale, UIscale, 1);
@@ -81,6 +81,9 @@ public class HotbarScript : MonoBehaviour
                 clearSlot(i);
             }
         }
+        RectTransform rect = GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(171,18);
+
     }
 
     private void clearSlot(int slot)
