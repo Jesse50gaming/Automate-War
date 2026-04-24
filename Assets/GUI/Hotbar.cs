@@ -6,6 +6,7 @@ using Items;
 using Container;
 using UnityEngine.Rendering.Universal.Internal;
 using Unity.Burst.CompilerServices;
+using UnityEngine;
 
 namespace Container
 {
@@ -14,7 +15,7 @@ namespace Container
     {
         public const int hotbarHeight = 1;
         public const int hotbarWidth = 10;
-
+        public static readonly Vector2 hotbarSize = new Vector2(171,18);
         public const int slotWidth = 16;
         public const int slotPadding = 1;
         public const int gapFromBottomOfScreen = 10;

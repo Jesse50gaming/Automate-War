@@ -311,53 +311,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
---- !u!1 &617913990 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2976565248608037215, guid: a95cc94002a235740881110a92d860ec, type: 3}
-  m_PrefabInstance: {fileID: 1484294322}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &617913995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617913990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 17
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &736735586 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5979846924430051016, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
   m_PrefabInstance: {fileID: 452537798}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &736735587 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -6563687456730324018, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
-  m_PrefabInstance: {fileID: 452537798}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736735586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c6f17927b4b5254289b9f137e965b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1001 &811063634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,21 +522,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8683496431345057586, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: ItemAtlas
-      value: 
-      objectReference: {fileID: 2800000, guid: 66eb3724c236c3c479e55ce3f693edca, type: 3}
-    - target: {fileID: 8683496431345057586, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: inventoryScript
-      value: 
-      objectReference: {fileID: 736735587}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2976565248608037215, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 617913995}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a95cc94002a235740881110a92d860ec, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

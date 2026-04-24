@@ -8,7 +8,7 @@ public class HotbarScript : MonoBehaviour
 {
     [SerializeField] public Texture2D texture;
     [SerializeField] private Texture2D ItemAtlas;
-
+    
     private Image hotbarImage;
 
     [SerializeField] private InventoryScript inventoryScript;
@@ -19,7 +19,7 @@ public class HotbarScript : MonoBehaviour
 
     // Sprite cache (prevents recreating sprites every update)
     private Dictionary<Texture2D, Sprite> spriteCache = new Dictionary<Texture2D, Sprite>();
-
+    
     void Start()
     {
         if (inventoryScript == null)
@@ -38,7 +38,7 @@ public class HotbarScript : MonoBehaviour
 
         // IMPORTANT: layout-safe positioning only
         RectTransform rect = GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(171,18);
+        rect.sizeDelta = Hotbar.hotbarSize;
         rect.anchorMin = new Vector2(0.5f, 0f);
         rect.anchorMax = new Vector2(0.5f, 0f);
         rect.pivot = new Vector2(0.5f, 0f);
@@ -82,7 +82,7 @@ public class HotbarScript : MonoBehaviour
             }
         }
         RectTransform rect = GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(171,18);
+        rect.sizeDelta = Hotbar.hotbarSize;
 
     }
 
