@@ -23,7 +23,7 @@ public class InventoryUIScript : MonoBehaviour
 
     void Start()
     {
-        // Hotbar background
+        // inventory background
         inventoryImage = GetComponent<Image>();
         inventoryImage.sprite = Texture2DToSprite(texture);
 
@@ -49,9 +49,10 @@ public class InventoryUIScript : MonoBehaviour
     {
         GridLayoutGroup grid = gridContainer.GetComponent<GridLayoutGroup>();
 
+        
         if (grid != null)
         {   
-            //TODO: down 1 right 1
+            
             grid.cellSize = new Vector2(slotWidth, slotHeight);
             grid.spacing = new Vector2(padding, padding);
             grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
