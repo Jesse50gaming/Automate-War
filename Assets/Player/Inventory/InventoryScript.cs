@@ -3,8 +3,10 @@ using Container;
 public class InventoryScript : MonoBehaviour
 { 
 
-     private const int rows = 4;
-     private const int columns = 10;
+    public const int rows = 4;
+    public const int columns = 10;
+    public readonly Vector2 inventorySize = new Vector2(171, 69);
+    public const int distanceFromFloor = 200;
     public Inventory inventory;
     public Hotbar hotbar;
     [SerializeField] private HotbarScript hotbarScript;
