@@ -31,5 +31,10 @@ namespace Items
         {
             return atlasCoord;
         }
+
+        public int getCount()
+        {
+            return count;
+        }
     }
 }

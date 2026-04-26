@@ -3,13 +3,14 @@ using Container;
 using Items;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class HotbarScript : MonoBehaviour
 {
     [SerializeField] public Texture2D texture;
     [SerializeField] private Texture2D ItemAtlas;
     
     private Image hotbarImage;
+    private int fontSize = 8;
 
     [SerializeField] private InventoryScript inventoryScript;
     private Hotbar hotbar;
@@ -119,10 +120,12 @@ public class HotbarScript : MonoBehaviour
             RectTransform slotRect = slotObject.AddComponent<RectTransform>();
             Image slotImage = slotObject.AddComponent<Image>();
 
-            slotImage.color = new Color32(0, 0, 0, 0); // transparent slot background
+            slotImage.color = new Color32(0, 0, 0, 0);
 
-            // Let Layout Group handle positioning → NO anchoredPosition
-            slotRect.sizeDelta = new Vector2(Hotbar.slotWidth + (Hotbar.slotPadding * 2), Hotbar.slotWidth + (Hotbar.slotPadding * 2));
+            slotRect.sizeDelta = new Vector2(
+                Hotbar.slotWidth + (Hotbar.slotPadding * 2),
+                Hotbar.slotWidth + (Hotbar.slotPadding * 2)
+            );
 
             // ================= ITEM =================
             GameObject itemObject = new GameObject("Item");
@@ -136,6 +139,28 @@ public class HotbarScript : MonoBehaviour
             itemRect.anchoredPosition = Vector2.zero;
 
             itemImage.sprite = Texture2DToSprite(itemTexture);
+
+            // ================= COUNT TEXT =================
+            GameObject textObject = new GameObject("CountText");
+            textObject.transform.SetParent(slotObject.transform, false);
+
+            RectTransform textRect = textObject.AddComponent<RectTransform>();
+            TextMeshProUGUI countText = textObject.AddComponent<TextMeshProUGUI>();
+
+            // Position bottom-right
+            textRect.anchorMin = new Vector2(1, 0);
+            textRect.anchorMax = new Vector2(1, 0);
+            textRect.pivot = new Vector2(1, 0);
+            textRect.anchoredPosition = new Vector2(8, -10);
+            textRect.sizeDelta = new Vector2(15, 10);
+
+            // Style
+            countText.fontSize = fontSize;
+            countText.alignment = TextAlignmentOptions.BottomRight;
+            countText.color = Color.white;
+
+            // Set text
+            countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
         }
         else
         {
@@ -147,20 +172,14 @@ public class HotbarScript : MonoBehaviour
                 Image itemImage = itemTransform.GetComponent<Image>();
                 itemImage.sprite = Texture2DToSprite(itemTexture);
             }
-            else
+
+            // ================= UPDATE COUNT =================
+            Transform textTransform = slotTransform.Find("CountText");
+
+            if (textTransform != null)
             {
-                // recreate if missing
-                GameObject itemObject = new GameObject("Item");
-                itemObject.transform.SetParent(slotTransform, false);
-
-                RectTransform itemRect = itemObject.AddComponent<RectTransform>();
-                Image itemImage = itemObject.AddComponent<Image>();
-
-                itemRect.sizeDelta = new Vector2(Hotbar.slotWidth, Hotbar.slotWidth);
-                itemRect.anchorMin = itemRect.anchorMax = new Vector2(0.5f, 0.5f);
-                itemRect.anchoredPosition = Vector2.zero;
-
-                itemImage.sprite = Texture2DToSprite(itemTexture);
+                TextMeshProUGUI countText = textTransform.GetComponent<TextMeshProUGUI>();
+                countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
             }
         }
     }
