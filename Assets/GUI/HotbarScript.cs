@@ -151,7 +151,7 @@ public class HotbarScript : MonoBehaviour
             textRect.anchorMin = new Vector2(1, 0);
             textRect.anchorMax = new Vector2(1, 0);
             textRect.pivot = new Vector2(1, 0);
-            textRect.anchoredPosition = new Vector2(8, -10);
+            textRect.anchoredPosition = new Vector2(8, -9);
             textRect.sizeDelta = new Vector2(15, 10);
 
             // Style
