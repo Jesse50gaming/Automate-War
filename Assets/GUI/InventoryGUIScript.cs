@@ -18,8 +18,15 @@ public class InventoryUIScript : MonoBehaviour
     [SerializeField] private int padding = 1;
     [SerializeField] private int UIscale = 5;
 
+    [SerializeField] private KeyCode inventoryKey = KeyCode.E;
+
+    private bool isOpen = false;
+
     private Image inventoryImage;
     private Dictionary<Texture2D, Sprite> spriteCache = new Dictionary<Texture2D, Sprite>();
+
+    private float toggleCooldown = 0.2f; // seconds
+    private float lastToggleTime = 0f;
 
     void Start()
     {
@@ -164,4 +171,21 @@ public class InventoryUIScript : MonoBehaviour
         spriteCache[texture] = sprite;
         return sprite;
     }
+
+    public void Update()
+    {
+        
+    }
+
+    private void checkToggle()
+    {
+        if (Input.GetKeyDown(inventoryKey) && Time.time - lastToggleTime > toggleCooldown)
+        {
+            
+            isOpen = !isOpen;
+            lastToggleTime = Time.time;
+            
+        }
+    }
+    
 }
