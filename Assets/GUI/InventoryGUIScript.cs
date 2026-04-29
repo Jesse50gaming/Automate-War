@@ -49,6 +49,7 @@ public class InventoryUIScript : MonoBehaviour
 
         SetupGrid();
         CreateSlots();
+        CloseInventory();
     }
 
     // ================= GRID SETUP =================
@@ -174,7 +175,7 @@ public class InventoryUIScript : MonoBehaviour
 
     public void Update()
     {
-        
+        checkToggle();
     }
 
     private void checkToggle()
@@ -184,8 +185,22 @@ public class InventoryUIScript : MonoBehaviour
             
             isOpen = !isOpen;
             lastToggleTime = Time.time;
+            if (isOpen) OpenInventory();
+            else CloseInventory();
             
         }
+    }
+
+    public void OpenInventory()
+    {
+        inventoryImage.enabled = true;
+        gridContainer.gameObject.SetActive(true);
+    }
+
+    public void CloseInventory()
+    {
+        inventoryImage.enabled = false;
+        gridContainer.gameObject.SetActive(false);
     }
     
 }
