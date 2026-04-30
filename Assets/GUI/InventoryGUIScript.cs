@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using Items;
 
-public class InventoryUIScript : MonoBehaviour
+public class InventoryGUIScript : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform gridContainer; // Assign the Grid child here
@@ -19,8 +19,9 @@ public class InventoryUIScript : MonoBehaviour
     [SerializeField] private int UIscale = 5;
 
     [SerializeField] private KeyCode inventoryKey = KeyCode.E;
+    [SerializeField] private PlayerCamera playerCamera;
 
-    private bool isOpen = false;
+    public bool isOpen = false;
 
     private Image inventoryImage;
     private Dictionary<Texture2D, Sprite> spriteCache = new Dictionary<Texture2D, Sprite>();
@@ -43,7 +44,7 @@ public class InventoryUIScript : MonoBehaviour
 
         rect.anchoredPosition = new Vector2(0, InventoryScript.distanceFromFloor);
 
-        // Apply global scale (THIS replaces all per-slot scaling)
+        // Apply global scale 
         rect.localScale = new Vector3(UIscale, UIscale, 1);
 
 
@@ -195,12 +196,14 @@ public class InventoryUIScript : MonoBehaviour
     {
         inventoryImage.enabled = true;
         gridContainer.gameObject.SetActive(true);
+        playerCamera.setMovement(false);
     }
 
     public void CloseInventory()
     {
         inventoryImage.enabled = false;
         gridContainer.gameObject.SetActive(false);
+        playerCamera.setMovement(true);
     }
     
 }

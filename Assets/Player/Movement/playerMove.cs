@@ -18,6 +18,8 @@ public class PlayerMove : MonoBehaviour
 
     public KeyCode jumpKey = KeyCode.Space;
 
+    [SerializeField] private InventoryGUIScript inventoryGUIScript;
+
     Rigidbody rb;
     GameObject player;
 
@@ -25,6 +27,9 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        if (inventoryGUIScript == null) inventoryGUIScript = FindObjectOfType<InventoryGUIScript>();
+        
 
         player = gameObject;
     }
@@ -56,6 +61,7 @@ public class PlayerMove : MonoBehaviour
 
     void movePlayer()
     {
+        if (inventoryGUIScript.isOpen) return;
         moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         if (grounded)
