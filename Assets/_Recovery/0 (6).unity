@@ -316,17 +316,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5979846924430051016, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
   m_PrefabInstance: {fileID: 452537798}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &736735587 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -6563687456730324018, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
-  m_PrefabInstance: {fileID: 452537798}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736735586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c6f17927b4b5254289b9f137e965b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1001 &811063634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -441,7 +430,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1346032091
+--- !u!1001 &1484294322
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -453,22 +442,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GUI
       objectReference: {fileID: 0}
-    - target: {fileID: 2116662250352775017, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2116662250352775017, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2116662250352775017, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3647088008467714309, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: inventoryScript
-      value: 
-      objectReference: {fileID: 736735587}
     - target: {fileID: 5871535249105898742, guid: a95cc94002a235740881110a92d860ec, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -549,10 +522,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8821701116928386100, guid: a95cc94002a235740881110a92d860ec, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -566,4 +535,4 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 452537798}
   - {fileID: 811063634}
-  - {fileID: 1346032091}
+  - {fileID: 1484294322}

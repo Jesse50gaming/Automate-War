@@ -18,17 +18,25 @@ public class PlayerMove : MonoBehaviour
 
     public KeyCode jumpKey = KeyCode.Space;
 
+    [SerializeField] private InventoryGUIScript inventoryGUIScript;
+
     Rigidbody rb;
+    GameObject player;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        if (inventoryGUIScript == null) inventoryGUIScript = FindObjectOfType<InventoryGUIScript>();
+        
+
+        player = gameObject;
     }
 
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, gameObject.transform.localScale.y * 1.1f);
+        grounded = Physics.Raycast(transform.position, Vector3.down, player.transform.localScale.y * 1.1f);
 
         getMovement();
         applyDrag();
@@ -53,6 +61,7 @@ public class PlayerMove : MonoBehaviour
 
     void movePlayer()
     {
+        if (inventoryGUIScript.isOpen) return;
         moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         if (grounded)
