@@ -1,5 +1,6 @@
 using UnityEngine;
 using Container;
+using Items;
 public class InventoryScript : MonoBehaviour
 { 
 
@@ -10,6 +11,7 @@ public class InventoryScript : MonoBehaviour
     public Inventory inventory;
     public Hotbar hotbar;
     [SerializeField] private HotbarScript hotbarScript;
+    [SerializeField] private InventoryGUIScript inventoryGUIScript;
 
     void Awake()
     {
@@ -17,16 +19,24 @@ public class InventoryScript : MonoBehaviour
         hotbar = new Hotbar(hotbarScript);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called once after all Awake methods have run
     void Start()
     {
-        
+        // Delay GUI drawing until the inventory UI has finished creating its slot objects.
+        putItem(new DirtItem(5), 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+
+    void putItem(Item item, int row, int col)
+    {
+        inventory.putItem(row, col, item);
+        inventoryGUIScript.DrawItem(item, row, col);
     }
 
     

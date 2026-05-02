@@ -28,17 +28,17 @@ namespace Container
 
         public Item putItem(int row, int column, Item item)
         {
-            if(row > rows || row <0 || column > columns || column <0) return null;
-            Item item2 = inventory[row,column];
-            inventory[row,column] = item;
+            if (row >= rows || row < 0 || column >= columns || column < 0) return null;
+            Item item2 = inventory[row, column];
+            inventory[row, column] = item;
 
             return item2;
         }
 
         public void removeItem(int row, int column)
         {
-            if(row > rows || row <0 || column > columns || column <0) return;
-            inventory[row,column] = null;
+            if (row >= rows || row < 0 || column >= columns || column < 0) return;
+            inventory[row, column] = null;
         }
     }
 }

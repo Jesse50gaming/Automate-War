@@ -131,10 +131,6 @@ PrefabInstance:
       propertyPath: hotbarScript
       value: 
       objectReference: {fileID: 1964311499}
-    - target: {fileID: -6563687456730324018, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
-      propertyPath: inventoryGUIScript
-      value: 
-      objectReference: {fileID: 1063384958}
     - target: {fileID: 3367382382599763841, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
       propertyPath: jumpForce
       value: 10
@@ -463,23 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6f17927b4b5254289b9f137e965b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
---- !u!114 &1063384958 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3647088008467714309, guid: a95cc94002a235740881110a92d860ec, type: 3}
-  m_PrefabInstance: {fileID: 36903554167585689}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 438174b0b3491d546bd78f639e61c2ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
---- !u!224 &1460509275 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5608617650558409007, guid: a95cc94002a235740881110a92d860ec, type: 3}
-  m_PrefabInstance: {fileID: 36903554167585689}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1584678082 stripped
+--- !u!114 &1022609913 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1507714107422365849, guid: a71c1f48d2bdfd0479bdaeb6a33784fd, type: 3}
   m_PrefabInstance: {fileID: 118250525}
@@ -490,6 +470,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e6b14589bbd804292a52ebabb3c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementScript
+--- !u!224 &1460509275 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5608617650558409007, guid: a95cc94002a235740881110a92d860ec, type: 3}
+  m_PrefabInstance: {fileID: 36903554167585689}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1902788179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -593,7 +578,7 @@ PrefabInstance:
     - target: {fileID: 3647088008467714309, guid: a95cc94002a235740881110a92d860ec, type: 3}
       propertyPath: playerCamera
       value: 
-      objectReference: {fileID: 1584678082}
+      objectReference: {fileID: 1022609913}
     - target: {fileID: 3647088008467714309, guid: a95cc94002a235740881110a92d860ec, type: 3}
       propertyPath: gridContainer
       value: 

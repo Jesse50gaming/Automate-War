@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Items;
+using Container;
+using JetBrains.Annotations;
 
 public class InventoryGUIScript : MonoBehaviour
 {
@@ -20,6 +22,7 @@ public class InventoryGUIScript : MonoBehaviour
 
     [SerializeField] private KeyCode inventoryKey = KeyCode.E;
     [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private int fontSize = 6;
 
     public bool isOpen = false;
 
@@ -82,6 +85,7 @@ public class InventoryGUIScript : MonoBehaviour
 
             RectTransform rect = slot.AddComponent<RectTransform>();
             Image image = slot.AddComponent<Image>();
+            slot.AddComponent<guiItemScript>();
 
             image.color = new Color32(0, 0, 0, 0); // transparent
 
@@ -90,8 +94,17 @@ public class InventoryGUIScript : MonoBehaviour
     }
 
     // ================= DRAW ITEM =================
-    public void DrawItem(Item item, int slotIndex)
+    public void DrawItem(Item item, int row, int col)
     {
+        if (item == null) return;
+
+        if (gridContainer.childCount == 0)
+        {
+            CreateSlots();
+        }
+
+        int slotIndex = inventoryScript.inventory.columns * row + col;
+        print(slotIndex);
         Transform slot = gridContainer.Find("Slot_" + slotIndex);
         if (slot == null) return;
 
@@ -129,25 +142,23 @@ public class InventoryGUIScript : MonoBehaviour
             GameObject textObj = new GameObject("CountText");
             textObj.transform.SetParent(slot, false);
 
-            RectTransform rect = textObj.AddComponent<RectTransform>();
-            TextMeshProUGUI text = textObj.AddComponent<TextMeshProUGUI>();
+           RectTransform textRect = textObj.AddComponent<RectTransform>();
+            TextMeshProUGUI countText = textObj.AddComponent<TextMeshProUGUI>();
 
-            rect.anchorMin = new Vector2(1, 0);
-            rect.anchorMax = new Vector2(1, 0);
-            rect.pivot = new Vector2(1, 0);
-            rect.anchoredPosition = new Vector2(-1, 1);
-            rect.sizeDelta = new Vector2(30, 20);
+            // Position bottom-right
+            textRect.anchorMin = new Vector2(1, 0);
+            textRect.anchorMax = new Vector2(1, 0);
+            textRect.pivot = new Vector2(1, 0);
+            textRect.anchoredPosition = new Vector2(0, -2);
+            textRect.sizeDelta = new Vector2(12, 8);
 
-            text.fontSize = 18;
-            text.alignment = TextAlignmentOptions.BottomRight;
-            text.color = Color.white;
+            // Style
+            countText.fontSize = fontSize;
+            countText.alignment = TextAlignmentOptions.BottomRight;
+            countText.color = Color.white;
 
-            // optional outline
-            var outline = textObj.AddComponent<Outline>();
-            outline.effectColor = Color.black;
-            outline.effectDistance = new Vector2(1, -1);
-
-            text.text = item.getCount() > 1 ? item.getCount().ToString() : "";
+            // Set text
+            countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
         }
         else
         {
@@ -177,6 +188,7 @@ public class InventoryGUIScript : MonoBehaviour
     public void Update()
     {
         checkToggle();
+
     }
 
     private void checkToggle()
