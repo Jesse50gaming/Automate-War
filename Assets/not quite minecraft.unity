@@ -587,6 +587,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3647088008467714309, guid: a95cc94002a235740881110a92d860ec, type: 3}
+      propertyPath: fontSize
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3647088008467714309, guid: a95cc94002a235740881110a92d860ec, type: 3}
       propertyPath: itemAtlas
       value: 
       objectReference: {fileID: 2800000, guid: 66eb3724c236c3c479e55ce3f693edca, type: 3}
@@ -683,6 +687,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8683496431345057586, guid: a95cc94002a235740881110a92d860ec, type: 3}
+      propertyPath: UIscale
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683496431345057586, guid: a95cc94002a235740881110a92d860ec, type: 3}
       propertyPath: inventoryScript
       value: 
       objectReference: {fileID: 892024749}
@@ -690,7 +698,8 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5331199007511122576, guid: a95cc94002a235740881110a92d860ec, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
