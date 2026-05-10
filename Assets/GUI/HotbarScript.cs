@@ -10,7 +10,7 @@ public class HotbarScript : MonoBehaviour
     [SerializeField] private Texture2D ItemAtlas;
     
     private Image hotbarImage;
-    private int fontSize = 8;
+    private int fontSize = 7;
 
     [SerializeField] private InventoryScript inventoryScript;
     private InventoryGUIScript inventoryGUI;
@@ -47,7 +47,7 @@ public class HotbarScript : MonoBehaviour
             uiCanvas = FindFirstObjectByType<Canvas>();
         }
 
-        DisableLayoutGroup();
+        
         CreateSlots();
 
         // IMPORTANT: layout-safe positioning only
@@ -97,14 +97,6 @@ public class HotbarScript : MonoBehaviour
         }
     }
 
-    private void DisableLayoutGroup()
-    {
-        LayoutGroup group = GetComponent<LayoutGroup>();
-        if (group != null)
-        {
-            group.enabled = false;
-        }
-    }
 
     private Sprite Texture2DToSprite(Texture2D texture)
     {
@@ -145,26 +137,15 @@ public class HotbarScript : MonoBehaviour
     {
         Transform slotTransform = transform.Find("Slot_" + slot);
 
-        if (slotTransform != null)
-        {
-            Transform itemTransform = slotTransform.Find("Item");
+        if (slotTransform == null) return;
 
-            if (itemTransform != null)
-            {
-                Image itemImage = itemTransform.GetComponent<Image>();
-                itemImage.sprite = null;
-            }
+        Transform itemTransform = slotTransform.Find("Item");
+        if (itemTransform != null)
+            Destroy(itemTransform.gameObject);
 
-            Transform textTransform = slotTransform.Find("CountText");
-            if (textTransform != null)
-            {
-                TextMeshProUGUI countText = textTransform.GetComponent<TextMeshProUGUI>();
-                if (countText != null)
-                {
-                    countText.text = string.Empty;
-                }
-            }
-        }
+        Transform textTransform = slotTransform.Find("CountText");
+        if (textTransform != null)
+            Destroy(textTransform.gameObject);
     }
 
     private void drawItem(Item item, int slot)
@@ -207,34 +188,35 @@ public class HotbarScript : MonoBehaviour
 
         // ================= COUNT TEXT =================
         Transform textTransform = slotTransform.Find("CountText");
+
         if (textTransform == null)
         {
-            GameObject textObject = new GameObject("CountText");
-            textObject.transform.SetParent(slotObject.transform, false);
+            GameObject textObj = new GameObject("CountText");
+            textObj.transform.SetParent(slotTransform, false);
 
-            RectTransform textRect = textObject.AddComponent<RectTransform>();
-            TextMeshProUGUI countText = textObject.AddComponent<TextMeshProUGUI>();
+           RectTransform textRect = textObj.AddComponent<RectTransform>();
+            TextMeshProUGUI countText = textObj.AddComponent<TextMeshProUGUI>();
+            countText.raycastTarget = false;
 
             // Position bottom-right
             textRect.anchorMin = new Vector2(1, 0);
             textRect.anchorMax = new Vector2(1, 0);
             textRect.pivot = new Vector2(1, 0);
-            textRect.anchoredPosition = new Vector2(8, -9);
-            textRect.sizeDelta = new Vector2(15, 10);
+            textRect.anchoredPosition = new Vector2(0, 0);
+            textRect.sizeDelta = new Vector2(12, 8);
 
             // Style
             countText.fontSize = fontSize;
             countText.alignment = TextAlignmentOptions.BottomRight;
             countText.color = Color.white;
+
+            // Set text
             countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
         }
         else
         {
-            TextMeshProUGUI countText = textTransform.GetComponent<TextMeshProUGUI>();
-            if (countText != null)
-            {
-                countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
-            }
+            TextMeshProUGUI text = textTransform.GetComponent<TextMeshProUGUI>();
+            text.text = item.getCount() > 1 ? item.getCount().ToString() : "";
         }
     }
 }

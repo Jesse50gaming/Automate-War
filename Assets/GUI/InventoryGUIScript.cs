@@ -23,7 +23,7 @@ public class InventoryGUIScript : MonoBehaviour
 
     [SerializeField] private KeyCode inventoryKey = KeyCode.E;
     [SerializeField] private PlayerCamera playerCamera;
-    [SerializeField] private int fontSize = 6;
+    [SerializeField] private int fontSize = 7;
 
     public bool isOpen = false;
 
@@ -213,7 +213,7 @@ public class InventoryGUIScript : MonoBehaviour
             textRect.anchorMin = new Vector2(1, 0);
             textRect.anchorMax = new Vector2(1, 0);
             textRect.pivot = new Vector2(1, 0);
-            textRect.anchoredPosition = new Vector2(0, -2);
+            textRect.anchoredPosition = new Vector2(0, 0);
             textRect.sizeDelta = new Vector2(12, 8);
 
             // Style
