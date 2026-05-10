@@ -13,7 +13,9 @@ public class HotbarScript : MonoBehaviour
     private int fontSize = 8;
 
     [SerializeField] private InventoryScript inventoryScript;
+    private InventoryGUIScript inventoryGUI;
     private Hotbar hotbar;
+    private Canvas uiCanvas;
 
     // Global UI scale (apply to whole hotbar instead of per-slot math)
     [SerializeField] private int UIscale = 5;
@@ -25,17 +27,28 @@ public class HotbarScript : MonoBehaviour
     {
         if (inventoryScript == null)
         {
-            inventoryScript = FindObjectOfType<InventoryScript>();
+            inventoryScript = FindFirstObjectByType<InventoryScript>();
         }
 
         if (inventoryScript != null)
         {
             hotbar = inventoryScript.hotbar;
+            inventoryGUI = FindFirstObjectByType<InventoryGUIScript>();
         }
 
         // Hotbar background
         hotbarImage = GetComponent<Image>();
         hotbarImage.sprite = Texture2DToSprite(texture);
+        hotbarImage.raycastTarget = false;
+
+        uiCanvas = GetComponentInParent<Canvas>();
+        if (uiCanvas == null)
+        {
+            uiCanvas = FindFirstObjectByType<Canvas>();
+        }
+
+        DisableLayoutGroup();
+        CreateSlots();
 
         // IMPORTANT: layout-safe positioning only
         RectTransform rect = GetComponent<RectTransform>();
@@ -50,6 +63,47 @@ public class HotbarScript : MonoBehaviour
         rect.localScale = new Vector3(UIscale, UIscale, 1);
 
         updateHotbar();
+    }
+
+    private void CreateSlots()
+    {
+        for (int slot = 0; slot < Hotbar.hotbarWidth; slot++)
+        {
+            if (transform.Find("Slot_" + slot) != null)
+                continue;
+
+            GameObject slotObject = new GameObject("Slot_" + slot);
+            slotObject.transform.SetParent(transform, false);
+
+            HotbarSlot slotScript = slotObject.AddComponent<HotbarSlot>();
+            slotScript.inventoryGUI = inventoryGUI;
+            slotScript.slot = slot;
+
+            RectTransform slotRect = slotObject.AddComponent<RectTransform>();
+            Image slotImage = slotObject.AddComponent<Image>();
+
+            slotImage.color = new Color32(0, 0, 0, 0);
+            slotImage.raycastTarget = true;
+
+            slotRect.anchorMin = new Vector2(0f, 1f);
+            slotRect.anchorMax = new Vector2(0f, 1f);
+            slotRect.pivot = new Vector2(0f, 1f);
+            slotRect.localScale = Vector3.one;
+            slotRect.anchoredPosition = new Vector2(slot * (Hotbar.slotWidth + Hotbar.slotPadding) + 0.5f, -0.5f);
+            slotRect.sizeDelta = new Vector2(
+                Hotbar.slotWidth + (Hotbar.slotPadding * 1),
+                Hotbar.slotWidth + (Hotbar.slotPadding * 1)
+            );
+        }
+    }
+
+    private void DisableLayoutGroup()
+    {
+        LayoutGroup group = GetComponent<LayoutGroup>();
+        if (group != null)
+        {
+            group.enabled = false;
+        }
     }
 
     private Sprite Texture2DToSprite(Texture2D texture)
@@ -100,6 +154,16 @@ public class HotbarScript : MonoBehaviour
                 Image itemImage = itemTransform.GetComponent<Image>();
                 itemImage.sprite = null;
             }
+
+            Transform textTransform = slotTransform.Find("CountText");
+            if (textTransform != null)
+            {
+                TextMeshProUGUI countText = textTransform.GetComponent<TextMeshProUGUI>();
+                if (countText != null)
+                {
+                    countText.text = string.Empty;
+                }
+            }
         }
     }
 
@@ -109,25 +173,17 @@ public class HotbarScript : MonoBehaviour
         Texture2D itemTexture = ItemAtlasCoords.getItemTexture(atlasCoord, ItemAtlas);
 
         Transform slotTransform = transform.Find("Slot_" + slot);
-        GameObject slotObject;
-
         if (slotTransform == null)
         {
-            // ================= SLOT =================
-            slotObject = new GameObject("Slot_" + slot);
-            slotObject.transform.SetParent(transform, false);
+            return;
+        }
 
-            RectTransform slotRect = slotObject.AddComponent<RectTransform>();
-            Image slotImage = slotObject.AddComponent<Image>();
+        GameObject slotObject = slotTransform.gameObject;
 
-            slotImage.color = new Color32(0, 0, 0, 0);
-
-            slotRect.sizeDelta = new Vector2(
-                Hotbar.slotWidth + (Hotbar.slotPadding * 2),
-                Hotbar.slotWidth + (Hotbar.slotPadding * 2)
-            );
-
-            // ================= ITEM =================
+        // ================= ITEM =================
+        Transform itemTransform = slotTransform.Find("Item");
+        if (itemTransform == null)
+        {
             GameObject itemObject = new GameObject("Item");
             itemObject.transform.SetParent(slotObject.transform, false);
 
@@ -139,8 +195,20 @@ public class HotbarScript : MonoBehaviour
             itemRect.anchoredPosition = Vector2.zero;
 
             itemImage.sprite = Texture2DToSprite(itemTexture);
+        }
+        else
+        {
+            Image itemImage = itemTransform.GetComponent<Image>();
+            if (itemImage != null)
+            {
+                itemImage.sprite = Texture2DToSprite(itemTexture);
+            }
+        }
 
-            // ================= COUNT TEXT =================
+        // ================= COUNT TEXT =================
+        Transform textTransform = slotTransform.Find("CountText");
+        if (textTransform == null)
+        {
             GameObject textObject = new GameObject("CountText");
             textObject.transform.SetParent(slotObject.transform, false);
 
@@ -158,27 +226,13 @@ public class HotbarScript : MonoBehaviour
             countText.fontSize = fontSize;
             countText.alignment = TextAlignmentOptions.BottomRight;
             countText.color = Color.white;
-
-            // Set text
             countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
         }
         else
         {
-            // ================= UPDATE ITEM =================
-            Transform itemTransform = slotTransform.Find("Item");
-
-            if (itemTransform != null)
+            TextMeshProUGUI countText = textTransform.GetComponent<TextMeshProUGUI>();
+            if (countText != null)
             {
-                Image itemImage = itemTransform.GetComponent<Image>();
-                itemImage.sprite = Texture2DToSprite(itemTexture);
-            }
-
-            // ================= UPDATE COUNT =================
-            Transform textTransform = slotTransform.Find("CountText");
-
-            if (textTransform != null)
-            {
-                TextMeshProUGUI countText = textTransform.GetComponent<TextMeshProUGUI>();
                 countText.text = item.getCount() > 1 ? item.getCount().ToString() : "";
             }
         }
