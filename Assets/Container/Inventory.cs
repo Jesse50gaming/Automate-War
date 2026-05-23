@@ -26,20 +26,25 @@ namespace Container
             return inventory[row,column];
         }
 
-        public Item putItem(int row, int column, Item item)
+        public Item SwapItem(int row, int column, Item item)
         {
-            if(row > rows || row <0 || column > columns || column <0) return null;
+            if(row > rows || row <0 || column > columns || column <0) return item;//if out of bounds, put item back where it was
+            
             Item item2 = inventory[row,column];
+
+            if (item.GetType() == item2.GetType()) // the items are the same type, merge
+            {
+                item.setCount(item2.AddItem(item.getCount())); // adds to item 2 gives remainder to item 1
+                inventory[row, column] = item2;
+
+                return item;
+            }
             inventory[row,column] = item;
 
-            return item2;
+            return item2; // return item already in place // returns null if no item is there
         }
 
-        public void removeItem(int row, int column)
-        {
-            if(row > rows || row <0 || column > columns || column <0) return;
-            inventory[row,column] = null;
-        }
+        
     }
 }
 

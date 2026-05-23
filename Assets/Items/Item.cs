@@ -7,8 +7,7 @@ namespace Items
         private int count;
         private Vector2Int atlasCoord;
 
-        public int Count => count;
-        public Vector2Int AtlasCoord => atlasCoord;
+        protected int maxCount = 100;
 
         public Item(Vector2Int atlasCoord, int count)
         {
@@ -16,9 +15,15 @@ namespace Items
             this.count = count;
         }
 
-        public void AddItem(int amount)
+        public int AddItem(int amount)
         {
+            if (count + amount > maxCount)
+            {
+                count = maxCount;
+                return count + amount - maxCount;
+            }
             count += amount;
+            return 0;
         }
 
         public void RemoveItem(int amount)
@@ -36,5 +41,11 @@ namespace Items
         {
             return count;
         }
+
+        public void setCount(int count)
+        {
+            this.count = count;
+        }
+        
     }
 }

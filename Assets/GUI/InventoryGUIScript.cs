@@ -22,7 +22,7 @@ public class InventoryGUIScript : MonoBehaviour
     [SerializeField] private PlayerCamera playerCamera;
 
     public bool isOpen = false;
-
+    public readonly Vector2 inventorySize = new Vector2(171, 69);
     private Image inventoryImage;
     private Dictionary<Texture2D, Sprite> spriteCache = new Dictionary<Texture2D, Sprite>();
 
